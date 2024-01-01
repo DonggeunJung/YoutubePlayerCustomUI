@@ -38,9 +38,17 @@ class CustomPlayerUiController(
         val playPauseButton = playerUi.findViewById<Button>(R.id.play_pause_button)
         val enterExitFullscreenButton =
             playerUi.findViewById<Button>(R.id.enter_exit_fullscreen_button)
-        playPauseButton.setOnClickListener { view: View? -> if (playerTracker.state == PlayerState.PLAYING) youTubePlayer!!.pause() else youTubePlayer!!.play() }
+        playPauseButton.setOnClickListener { view: View? ->
+            if (playerTracker.state == PlayerState.PLAYING)
+                youTubePlayer.pause()
+            else
+                youTubePlayer.play()
+        }
         enterExitFullscreenButton.setOnClickListener { view: View? ->
-            if (fullscreen) youTubePlayerView!!.wrapContent() else youTubePlayerView!!.matchParent()
+            if (fullscreen)
+                youTubePlayerView!!.wrapContent()
+            else
+                youTubePlayerView!!.matchParent()
             fullscreen = !fullscreen
         }
     }
@@ -49,13 +57,12 @@ class CustomPlayerUiController(
     }
 
     override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerState) {
-        if (state == PlayerState.PLAYING || state == PlayerState.PAUSED || state == PlayerState.VIDEO_CUED) {
-            val color = ContextCompat.getColor(context!!, android.R.color.transparent)
-            panel!!.setBackgroundColor(color)
-        }
-        else if (state == PlayerState.BUFFERING) {
-            val color = ContextCompat.getColor(context!!, android.R.color.transparent)
-            panel!!.setBackgroundColor(color)
+        when(state) {
+            PlayerState.PLAYING, PlayerState.PAUSED, PlayerState.VIDEO_CUED, PlayerState.BUFFERING -> {
+                val color = ContextCompat.getColor(context!!, android.R.color.transparent)
+                panel!!.setBackgroundColor(color)
+            }
+            else -> {}
         }
     }
 

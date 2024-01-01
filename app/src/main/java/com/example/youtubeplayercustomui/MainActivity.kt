@@ -55,10 +55,9 @@ class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
 
         // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            youTubePlayerView.matchParent()
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            youTubePlayerView.wrapContent()
+        when(newConfig.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> youTubePlayerView.matchParent()
+            Configuration.ORIENTATION_PORTRAIT -> youTubePlayerView.wrapContent()
         }
     }
 }
